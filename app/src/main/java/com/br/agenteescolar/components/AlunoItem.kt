@@ -38,7 +38,6 @@ fun AlunoItem(aluno: Aluno, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Ícone (similar à imagem no seu exemplo)
             Icon(
                 imageVector = Icons.Default.PersonOutline,
                 contentDescription = "Ícone do Aluno",
@@ -63,7 +62,6 @@ fun AlunoItem(aluno: Aluno, onClick: () -> Unit) {
                 )
             }
 
-            // Status (alinhado à direita, como o Rating no seu exemplo)
             Text(
                 text = aluno.status,
                 style = MaterialTheme.typography.bodySmall,
@@ -80,7 +78,7 @@ fun PreviewAlunoItem() {
     AgenteEscolarTheme {
         AlunoItem(
             aluno = Aluno(
-                id = "1",
+                id = 1,
                 nome = "Aluno de Exemplo",
                 escola = "Escola de Exemplo",
                 status = "Aguardando",

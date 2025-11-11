@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Aluno(
 
     @PrimaryKey(autoGenerate = false) // Usaremos o ID da API/JSON como chave primária
-    val id: String = "",
+    val id: Int = 0,
     val nome: String = "",
     val escola: String = "",
     val status: String = "", // Ex: "Ativo", "Aguardando Visita"

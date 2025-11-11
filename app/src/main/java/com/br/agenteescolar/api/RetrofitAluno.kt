@@ -10,5 +10,5 @@ object RetrofitAluno {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val propertyApi: AlunoApi = retrofit.create(AlunoApi::class.java)
+    val api: AlunoApi = retrofit.create(AlunoApi::class.java)
 }

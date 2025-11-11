@@ -5,9 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AlunoApi {
-    @GET("properties")
+    @GET("alunos")
     suspend fun findAll(): List<Aluno>
 
-    @GET("properties/{id}")
+    @GET("alunos/{id}")
     suspend fun findById(@Path("id") id: Int): Aluno
 }

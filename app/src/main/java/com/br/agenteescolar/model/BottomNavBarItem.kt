@@ -15,19 +15,19 @@ sealed class BottomNavBarItem(
     object Alunos : BottomNavBarItem(
         label = "Alunos",
         icon = Icons.AutoMirrored.Filled.List,
-        route = Routes.ALUNOS_LIST, // Ex: "lista_alunos"
+        route = Routes.ALUNOS_LIST,
     )
 
     object Mapa : BottomNavBarItem(
         label = "Mapa",
         icon = Icons.Filled.Map,
-        route = Routes.MAPA_GERAL, // Ex: "mapa"
+        route = Routes.MAPA_GERAL,
     )
 
     object Perfil : BottomNavBarItem(
         label = "Perfil",
         icon = Icons.Outlined.AccountCircle,
-        route = Routes.PERFIL, // Ex: "perfil"
+        route = Routes.PERFIL,
     )
 }
 

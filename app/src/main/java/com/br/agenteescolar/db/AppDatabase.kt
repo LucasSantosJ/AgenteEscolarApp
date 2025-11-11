@@ -23,11 +23,12 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "agente_escolar.db" // Nome do banco (similar ao seu "airbnb.db")
+                    "agente_escolar.db"
                 )
+                    // : Diz ao Room para recriar o BD se a versão mudar
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
-                // retorna a instância
                 instance
             }
         }
