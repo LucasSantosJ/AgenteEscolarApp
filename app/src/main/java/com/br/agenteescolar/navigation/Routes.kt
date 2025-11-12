@@ -7,8 +7,8 @@ object Routes {
     // Rota para a tela de Mapa
     const val MAPA_GERAL = "mapa"
 
-    // Rota para a tela de Perfil
-    const val PERFIL = "perfil"
+    // Rota para a sua tela de Visitas e Relatórios
+    const val VISITAS_LIST = "lista_visitas"
 
     /**
      * Rota para a tela de Detalhes do Aluno.
@@ -25,4 +25,6 @@ object Routes {
 
     // Rota para adicionar um novo aluno
     const val ADD_ALUNO = "add_aluno"
+
+
 }

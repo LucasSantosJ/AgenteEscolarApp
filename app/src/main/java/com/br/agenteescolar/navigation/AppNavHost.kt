@@ -28,8 +28,8 @@ fun AppNavHost(
             // 2️⃣ Mapa
             mapaGraph(navController)
 
-            // 3️⃣ Perfil
-            perfilGraph(navController)
+            // 3 Visitas/Relatórios
+            visitGraph(navController)
         }
     }
 }

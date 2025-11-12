@@ -14,9 +14,3 @@ fun NavGraphBuilder.mapaGraph(navController: NavController) {
     }
 }
 
-fun NavGraphBuilder.perfilGraph(navController: NavController) {
-    composable(Routes.PERFIL) {
-        // TODO: Substituir pela tela de Perfil
-        Text("Tela de Perfil (WIP)")
-    }
-}
