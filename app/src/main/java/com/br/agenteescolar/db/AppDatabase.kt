@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.br.agenteescolar.model.Aluno
+import com.br.agenteescolar.model.Visita
 
-@Database(entities = [Aluno::class], version = 1, exportSchema = false)
+@Database(entities = [Aluno::class, Visita::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     // Expõe o DAO para o Repositório
     abstract fun alunoDao(): AlunoDao
+    abstract fun visitaDao(): VisitaDao
 
     companion object {
         // Volatile garante que esta instância seja sempre visível para outros threads
