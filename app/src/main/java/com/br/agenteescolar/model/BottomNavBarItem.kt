@@ -2,8 +2,8 @@ package com.br.agenteescolar.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Assignment // <-- MUDANÇA 1: Novo ícone
 import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.br.agenteescolar.navigation.Routes
 
@@ -24,11 +24,12 @@ sealed class BottomNavBarItem(
         route = Routes.MAPA_GERAL,
     )
 
-    object Perfil : BottomNavBarItem(
-        label = "Perfil",
-        icon = Icons.Outlined.AccountCircle,
-        route = Routes.PERFIL,
+    // --- MUDANÇA 3: Objeto 'Perfil' REMOVIDO ---
+
+    // --- MUDANÇA 4: Objeto 'Visitas' ADICIONADO ---
+    object Visitas : BottomNavBarItem(
+        label = "Visitas",
+        icon = Icons.Filled.Assignment, // Ícone de "prancheta" (Relatório)
+        route = Routes.VISITAS_LIST,    // Rota que criamos
     )
 }
-
-
