@@ -6,10 +6,10 @@ import com.br.agenteescolar.model.Aluno
 import kotlinx.coroutines.flow.Flow
 
 class AlunoRepository(
-    private val alunoDao: AlunoDao,
-    private val alunoApi: AlunoApi
+    private val alunoDao: AlunoDao,//BANCO LOCAL
+    private val alunoApi: AlunoApi // API EXTERNA
 ) {
-    val alunos: Flow<List<Aluno>> = alunoDao.getAllAlunos()
+    val alunos: Flow<List<Aluno>> = alunoDao.getAllAlunos()//PARA MANTER A LISTA SEMPRE ATUALIZADA
 
     suspend fun atualizarAlunosDaApi() {
         val alunosRemotos = alunoApi.findAll()
@@ -18,6 +18,6 @@ class AlunoRepository(
     }
 
     suspend fun getAlunoPorId(id: Int): Aluno {
-        return alunoApi.findById(id) // <-- Usa a API injetada
+        return alunoApi.findById(id)
     }
 }

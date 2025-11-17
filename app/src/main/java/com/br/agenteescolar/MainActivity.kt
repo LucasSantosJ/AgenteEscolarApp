@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AgenteEscolarTheme {
-                // 2. Chame o AppNavHost. Ele NÃO precisa mais da factory.
+                // 2. Chame o AppNavHost.
                 AppNavHost()
             }
         }
