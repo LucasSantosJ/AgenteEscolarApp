@@ -28,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "agente_escolar.db"
                 )
                     // : Diz ao Room para recriar o BD se a versão mudar
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
                     .build()
                 INSTANCE = instance
                 instance

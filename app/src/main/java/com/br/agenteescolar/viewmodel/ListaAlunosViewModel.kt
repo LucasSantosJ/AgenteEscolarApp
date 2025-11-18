@@ -10,34 +10,47 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 //Conecta o repository
 class ListaAlunosViewModel(
-    private val repository: AlunoRepository
+private val repository: AlunoRepository
 ) : ViewModel() {
 
     val alunos = repository.alunos
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(0), emptyList())
 
-    // StateFlow para expor o erro para a UI
     private val _erroState = MutableStateFlow<String?>(null)
     val erroState = _erroState.asStateFlow()
 
-    fun atualizar() {
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
+
+    init {
+        //  Atualiza automaticamente na primeira execução
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 repository.atualizarAlunosDaApi()
-                _erroState.value = null // Limpa o erro se der certo
-
+                _erroState.value = null
             } catch (e: Exception) {
-                //  Captua o erro e avise a UI
-                _erroState.value = "Falha ao atualizar. Verifique sua conexão."
-                e.printStackTrace()
+                _erroState.value = "Falha ao carregar dados. Verifique sua conexão."
+            } finally {
+                _isLoading.value = false
             }
         }
     }
 
-    /**
-     * Função para a UI chamar depois de mostrar o erro,
-     * para "limpar" a mensagem.
-     */
+    fun atualizar() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                repository.atualizarAlunosDaApi()
+                _erroState.value = null
+            } catch (e: Exception) {
+                _erroState.value = "Falha ao atualizar. Verifique sua conexão."
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun limparErro() {
         _erroState.value = null
     }

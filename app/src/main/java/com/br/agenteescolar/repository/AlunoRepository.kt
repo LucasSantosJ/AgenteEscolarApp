@@ -9,7 +9,7 @@ class AlunoRepository(
     private val alunoDao: AlunoDao,//BANCO LOCAL
     private val alunoApi: AlunoApi // API EXTERNA
 ) {
-    val alunos: Flow<List<Aluno>> = alunoDao.getAllAlunos()//PARA MANTER A LISTA SEMPRE ATUALIZADA
+   val alunos: Flow<List<Aluno>> = alunoDao.getAllAlunos()//PARA MANTER A LISTA SEMPRE ATUALIZADA
 
     suspend fun atualizarAlunosDaApi() {
         val alunosRemotos = alunoApi.findAll()

@@ -10,7 +10,7 @@ data class Aluno(
     val id: Int = 0,
     val nome: String = "",
     val escola: String = "",
-    val status: String = "", // Ex: "Ativo", "Aguardando Visita"
+    val status: String = "",
     val cep: String = "",
     val nomeResponsavel: String = ""
 

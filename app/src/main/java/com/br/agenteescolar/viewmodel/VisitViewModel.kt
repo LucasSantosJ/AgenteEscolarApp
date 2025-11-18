@@ -15,28 +15,16 @@ import kotlinx.coroutines.launch
  * Recebe o VisitaRepository via injeção de dependência.
  */
 class VisitViewModel(
-    private val repository: VisitaRepository // <-- 1. Recebe o NOSSO repositório
+    private val repository: VisitaRepository
 ) : ViewModel() {
 
-    /**
-     * 2. Expõe a lista de visitas (o Flow do repositório)
-     * como um StateFlow para a UI "assinar".
-     */
     val todasVisitas = repository.todasVisitas
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(0), emptyList())
 
-    /**
-     * 3. StateFlow para expor erros para a UI
-     * (Exatamente como no AlunoViewModel).
-     */
+
     private val _erroState = MutableStateFlow<String?>(null)
     val erroState = _erroState.asStateFlow()
 
-    /**
-     * 4. Ação principal: Salva uma nova visita.
-     * A tela (UI) vai chamar esta função quando o usuário
-     * clicar no botão "Salvar".
-     */
     fun salvarNovaVisita(data: String, status: String, comentario: String, cidade: String) {
 
         // 5. Inicia a Coroutine no escopo do ViewModel
@@ -47,8 +35,7 @@ class VisitViewModel(
                     data = data,
                     status = status,
                     comentario = comentario
-                    // O 'id' é 0 (autoGenerate)
-                    // O 'clima' será preenchido lá no repositório
+
                 )
 
                 // 7. Chama a função SUSPENSA do repositório
@@ -66,9 +53,6 @@ class VisitViewModel(
         }
     }
 
-    /**
-     * 9. Função para a UI "limpar" a mensagem de erro.
-     */
     fun limparErro() {
         _erroState.value = null
     }

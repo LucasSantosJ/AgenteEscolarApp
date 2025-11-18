@@ -19,10 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.br.agenteescolar.model.Aluno
-import com.br.agenteescolar.ui.theme.AgenteEscolarTheme
 
 @Composable
 fun AlunoItem(aluno: Aluno, onClick: () -> Unit) {
@@ -69,23 +67,5 @@ fun AlunoItem(aluno: Aluno, onClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.secondary
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewAlunoItem() {
-    AgenteEscolarTheme {
-        AlunoItem(
-            aluno = Aluno(
-                id = 1,
-                nome = "Aluno de Exemplo",
-                escola = "Escola de Exemplo",
-                status = "Aguardando",
-                cep = "",
-                nomeResponsavel = ""
-            ),
-            onClick = {}
-        )
     }
 }

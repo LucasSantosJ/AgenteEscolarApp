@@ -1,4 +1,4 @@
-package com.br.agenteescolar.screens
+package com.br.agenteescolar.components
 
 import AlunoItem
 import androidx.compose.foundation.layout.*
@@ -23,6 +23,8 @@ fun ListaAlunosScreen(
     onAdicionarAlunoClick: () -> Unit
 ) {
     val alunos by viewModel.alunos.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val erro by viewModel.erroState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -46,19 +48,42 @@ fun ListaAlunosScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            if (alunos.isEmpty()) {
+
+            // 🔵 MOSTRAR LOADING APENAS QUANDO isLoading = true
+            if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(alunos) { aluno ->
-                        AlunoItem(aluno = aluno) {
-                            onAlunoClick(aluno)
-                        }
+                return@Box
+            }
+
+            // 🔴 MOSTRAR MENSAGEM DE ERRO
+            if (erro != null) {
+                Text(
+                    text = erro ?: "",
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MaterialTheme.colorScheme.error
+                )
+                return@Box
+            }
+
+            // 🟡 LISTA VAZIA (MAS NÃO ESTAMOS MAIS CARREGANDO)
+            if (alunos.isEmpty()) {
+                Text(
+                    text = "Nenhum aluno encontrado.",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                return@Box
+            }
+
+            // 🟢 LISTA NORMAL
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(alunos) { aluno ->
+                    AlunoItem(aluno = aluno) {
+                        onAlunoClick(aluno)
                     }
                 }
             }

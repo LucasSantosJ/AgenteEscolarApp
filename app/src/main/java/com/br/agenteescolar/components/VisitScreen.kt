@@ -1,9 +1,10 @@
-package com.br.agenteescolar.screens
+package com.br.agenteescolar.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -103,7 +104,8 @@ fun VisitScreen(
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-            Divider() // Linha divisória
+            HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+            // Linha divisória
             Spacer(modifier = Modifier.height(16.dp))
 
             // --- SEÇÃO 2: LISTA DE VISITAS SALVAS ---

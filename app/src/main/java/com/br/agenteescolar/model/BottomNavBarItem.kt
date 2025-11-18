@@ -1,6 +1,7 @@
 package com.br.agenteescolar.model
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Assignment // <-- MUDANÇA 1: Novo ícone
 import androidx.compose.material.icons.filled.Map
@@ -24,12 +25,9 @@ sealed class BottomNavBarItem(
         route = Routes.MAPA_GERAL,
     )
 
-    // --- MUDANÇA 3: Objeto 'Perfil' REMOVIDO ---
-
-    // --- MUDANÇA 4: Objeto 'Visitas' ADICIONADO ---
     object Visitas : BottomNavBarItem(
         label = "Visitas",
-        icon = Icons.Filled.Assignment, // Ícone de "prancheta" (Relatório)
+        icon = Icons.AutoMirrored.Filled.Assignment, // Ícone de "prancheta" (Relatório)
         route = Routes.VISITAS_LIST,    // Rota que criamos
     )
 }
