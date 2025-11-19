@@ -1,17 +1,32 @@
-package com.br.agenteescolar.components
+package com.br.agenteescolar.ui.screens.lista_alunos
 
 import AlunoItem
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.br.agenteescolar.model.Aluno
 import com.br.agenteescolar.viewmodel.ListaAlunosViewModel
 
@@ -22,70 +37,91 @@ fun ListaAlunosScreen(
     onAlunoClick: (Aluno) -> Unit,
     onAdicionarAlunoClick: () -> Unit
 ) {
-    val alunos by viewModel.alunos.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val erro by viewModel.erroState.collectAsState()
+    //  Coletamos os estados individualmente
+    // O Room garante que 'alunos' sempre tenha a versão mais recente do cache
+    val alunos by viewModel.alunos.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val erro by viewModel.erroState.collectAsStateWithLifecycle()
+
+    // Por enquanto, deixei um estado local ou fixo se não houver no VM.
+    val searchText = ""
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Lista de Alunos") },
-                actions = {
-                    IconButton(onClick = { viewModel.atualizar() }) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Atualizar")
-                    }
-                }
-            )
+            TopAppBar(title = { Text("Lista de Alunos") })
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAdicionarAlunoClick) {
-                Icon(Icons.Default.Add, contentDescription = "Adicionar Aluno")
+                Icon(Icons.Filled.Add, "Adicionar")
+            }
+        },
+        // O SnackbarHost exibe o erro sem tampar a tela inteira
+        snackbarHost = {
+            if (erro != null) {
+                Snackbar(
+                    modifier = Modifier.padding(16.dp),
+                    action = {
+                        androidx.compose.material3.TextButton(onClick = { viewModel.limparErro() }) {
+                            Text("OK")
+                        }
+                    }
+                ) { Text(text = erro!!) }
             }
         }
-    ) { padding ->
+    ) { paddingValues ->
         Box(
             modifier = Modifier
-                .padding(padding)
+                .padding(paddingValues)
                 .fillMaxSize()
         ) {
+            Column(modifier = Modifier.fillMaxSize()) {
 
-            // 🔵 MOSTRAR LOADING APENAS QUANDO isLoading = true
-            if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                return@Box
-            }
-
-            // 🔴 MOSTRAR MENSAGEM DE ERRO
-            if (erro != null) {
-                Text(
-                    text = erro ?: "",
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.error
+                // Campo de Pesquisa (Fixo no topo)
+                OutlinedTextField(
+                    value = searchText,
+                    onValueChange = { /* Implementar lógica de busca no VM */ },
+                    label = { Text("Pesquisar aluno") },
+                    leadingIcon = { Icon(Icons.Filled.Search, "Pesquisar") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    singleLine = true
                 )
-                return@Box
-            }
 
-            // 🟡 LISTA VAZIA (MAS NÃO ESTAMOS MAIS CARREGANDO)
-            if (alunos.isEmpty()) {
-                Text(
-                    text = "Nenhum aluno encontrado.",
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                return@Box
-            }
+                // 2. Barra de Progresso Não-Bloqueante
+                // Se a lista já existe mas estamos atualizando, mostramos essa barra fina.
+                if (isLoading) {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
 
-            // 🟢 LISTA NORMAL
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(alunos) { aluno ->
-                    AlunoItem(aluno = aluno) {
-                        onAlunoClick(aluno)
+                // 3. Lista de Alunos (Prioridade Máxima)
+                // Se o banco tem dados, mostramos eles IMEDIATAMENTE.
+                if (alunos.isNotEmpty()) {
+                    LazyColumn(
+                        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        items(alunos) { aluno ->
+                            AlunoItem(aluno = aluno, onClick = { onAlunoClick(aluno) })
+                        }
                     }
                 }
+                // Se não tem dados e parou de carregar, aí sim a lista está vazia.
+                else if (!isLoading) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Nenhum aluno encontrado.")
+                    }
+                }
+            }
+
+            // Loading Inicial (Bloqueante)
+            // Só mostramos o círculo grande no meio se NÃO houver dados para mostrar.
+            // Isso evita a "tela branca" inicial.
+            if (isLoading && alunos.isEmpty()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
     }

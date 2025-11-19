@@ -10,7 +10,7 @@ interface WeatherApi {
 
     @GET("{cidade}")
     suspend fun getWeather(
-        @Path("cidade") cidade: String,
+        @Path("cidade", encoded = true) cidade: String,
         @Query("format") format: String = "j1"
     ): WeatherResponse
 

@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.br.agenteescolar.MainActivity
-import com.br.agenteescolar.components.ListaAlunosScreen
+import com.br.agenteescolar.ui.screens.lista_alunos.ListaAlunosScreen
 import com.br.agenteescolar.viewmodel.ListaAlunosViewModel
 
 fun NavGraphBuilder.listaAlunosScreen(navController: NavController) {
