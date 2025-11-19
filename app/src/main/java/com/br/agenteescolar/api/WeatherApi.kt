@@ -7,14 +7,10 @@ import retrofit2.http.Query
 
 interface WeatherApi {
 
-    /**
-     * Busca o clima para uma cidade específica.
-     * Exemplo da URL que será montada:
-     * https://wttr.in/Sao+Paulo?format=j1
-     */
+
     @GET("{cidade}")
     suspend fun getWeather(
-        @Path("cidade") cidade: String,
+        @Path("cidade", encoded = true) cidade: String,
         @Query("format") format: String = "j1"
     ): WeatherResponse
 

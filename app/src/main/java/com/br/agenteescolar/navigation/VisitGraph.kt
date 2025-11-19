@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.br.agenteescolar.MainActivity
-import com.br.agenteescolar.screens.VisitScreen // <-- 1. Importa a SUA tela
+import com.br.agenteescolar.screens.VisitScreen
 import com.br.agenteescolar.viewmodel.VisitViewModel // <-- 2. Importa o SEU ViewModel
 
 /**
@@ -26,7 +26,7 @@ fun NavGraphBuilder.visitGraph(navController: NavController) {
             factory = activity.viewModelFactory
         )
 
-        // 5. Chama a SUA tela Composable
+        // 5. Chama a SUA tela Composablez
         VisitScreen(
             viewModel = viewModel
             // Como a VisitScreen não tem cliques de navegação,

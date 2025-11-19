@@ -1,19 +1,3 @@
-package com.br.agenteescolar.screens
-
-import AlunoItem
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.br.agenteescolar.model.Aluno
-import com.br.agenteescolar.viewmodel.ListaAlunosViewModel
 
 import android.content.Intent
 import androidx.compose.ui.platform.LocalContext
