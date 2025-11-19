@@ -10,18 +10,18 @@ import com.br.agenteescolar.viewmodel.ListaAlunosViewModel
 
 fun NavGraphBuilder.listaAlunosScreen(navController: NavController) {
 
-    // Registra a rota (usando o nome de Routes.kt)
+
     composable(Routes.ALUNOS_LIST) {
 
-        // Pega o contexto (que é a MainActivity)
+
         val activity = navController.context as MainActivity
 
-        // Cria o ViewModel usando a Factory da MainActivity
+
         val viewModel: ListaAlunosViewModel = viewModel(
             factory = activity.viewModelFactory
         )
 
-        // Chama a tela Composable
+
         ListaAlunosScreen(
             viewModel = viewModel,
             onAlunoClick = { aluno ->

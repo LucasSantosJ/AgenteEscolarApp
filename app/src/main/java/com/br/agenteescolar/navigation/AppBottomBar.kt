@@ -12,7 +12,7 @@ import com.br.agenteescolar.model.BottomNavBarItem
 
 @Composable
 fun AppBottomBar(navController: NavController) {
-    // Lista dos itens que queremos na barra
+
     val items = listOf(
         BottomNavBarItem.Alunos,
         BottomNavBarItem.Mapa,
@@ -31,7 +31,7 @@ fun AppBottomBar(navController: NavController) {
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        // Evita empilhar a mesma tela várias vezes
+
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }

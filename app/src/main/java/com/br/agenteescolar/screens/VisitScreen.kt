@@ -14,42 +14,41 @@ import com.br.agenteescolar.viewmodel.VisitViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VisitScreen(
-    viewModel: VisitViewModel // 1. Recebemos o NOSSO ViewModel
+    viewModel: VisitViewModel
 ) {
 
-    // 2. "Escutamos" os StateFlows que vêm do ViewModel
+
     val todasVisitas by viewModel.todasVisitas.collectAsState()
     val erro by viewModel.erroState.collectAsState()
 
-    // 3. Criamos "variáveis de estado" para os campos de texto do formulário
-    // 'remember' diz ao Compose para "lembrar" o que o usuário digitou
+
     var data by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
     var comentario by remember { mutableStateOf("") }
-    var cidade by remember { mutableStateOf("Sao Paulo") } // Deixamos um padrão
+    var cidade by remember { mutableStateOf("Sao Paulo") }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text("Relatórios de Visita") })
         }
     ) { padding ->
-        // 'Column' para empilhar nosso formulário e nossa lista
+
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp) // Uma borda geral
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
 
-            // --- SEÇÃO 1: FORMULÁRIO DE CADASTRO ---
+
 
             Text(
                 "Registrar Nova Visita",
                 style = MaterialTheme.typography.titleLarge
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Espaçamento
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo de Texto para DATA
+
             OutlinedTextField(
                 value = data,
                 onValueChange = { data = it },
@@ -58,7 +57,7 @@ fun VisitScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Campo de Texto para STATUS
+
             OutlinedTextField(
                 value = status,
                 onValueChange = { status = it },
@@ -67,7 +66,7 @@ fun VisitScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Campo de Texto para COMENTÁRIO
+
             OutlinedTextField(
                 value = comentario,
                 onValueChange = { comentario = it },
@@ -76,23 +75,22 @@ fun VisitScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Campo de Texto para CIDADE (para a API)
+
             OutlinedTextField(
                 value = cidade,
                 onValueChange = { cidade = it },
                 label = { Text("Cidade (para buscar o clima)") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Espaço maior
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Botão de Salvar
+
             Button(
                 onClick = {
-                    // 4. "Falamos" com o ViewModel!
-                    // Chamamos a função que criamos ontem
+
                     viewModel.salvarNovaVisita(data, status, comentario, cidade)
 
-                    // Opcional: Limpa os campos após o clique
+
                     data = ""
                     status = ""
                     comentario = ""
@@ -106,7 +104,7 @@ fun VisitScreen(
             Divider() // Linha divisória
             Spacer(modifier = Modifier.height(16.dp))
 
-            // --- SEÇÃO 2: LISTA DE VISITAS SALVAS ---
+
 
             Text(
                 "Visitas Registradas",
@@ -114,11 +112,11 @@ fun VisitScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista rolável de visitas
+
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                // 5. "Lemos" a lista 'todasVisitas' do ViewModel
+
                 items(todasVisitas) { visita ->
-                    // Um "Card" simples para mostrar cada visita
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()

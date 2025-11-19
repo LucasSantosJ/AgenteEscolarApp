@@ -17,7 +17,7 @@ class AppViewModelFactory(
 
         val db = AppDatabase.getDatabase(context)
 
-        // === VIEWMODEL DE ALUNOS ===
+
         if (modelClass.isAssignableFrom(ListaAlunosViewModel::class.java)) {
 
             val alunoDao = db.alunoDao()
@@ -28,11 +28,11 @@ class AppViewModelFactory(
             return ListaAlunosViewModel(alunoRepository) as T
         }
 
-        // === VIEWMODEL DE VISITAS ===
+
         if (modelClass.isAssignableFrom(VisitViewModel::class.java)) {
 
             val visitaDao = db.visitaDao()
-            val weatherApi = RetrofitWeather.api   // <-- AGORA CORRETO!
+            val weatherApi = RetrofitWeather.api
             val visitaRepository = VisitaRepository(visitaDao, weatherApi)
 
             @Suppress("UNCHECKED_CAST")

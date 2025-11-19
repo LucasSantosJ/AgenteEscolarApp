@@ -19,16 +19,16 @@ fun AppNavHost(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.ALUNOS_LIST, // Define a tela inicial
+            startDestination = Routes.ALUNOS_LIST,
             modifier = Modifier.padding(innerPadding)
         ) {
-            // 1️⃣ Lista de Alunos
+
             listaAlunosScreen(navController)
 
-            // 2️⃣ Mapa
+
             mapaGraph(navController)
 
-            // 3 Visitas/Relatórios
+
             visitGraph(navController)
         }
     }

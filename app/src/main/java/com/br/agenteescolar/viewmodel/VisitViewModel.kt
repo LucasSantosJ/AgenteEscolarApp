@@ -10,10 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel para as telas de Visita (Cadastro e Lista).
- * Recebe o VisitaRepository via injeção de dependência.
- */
+
 class VisitViewModel(
     private val repository: VisitaRepository
 ) : ViewModel() {
@@ -27,10 +24,9 @@ class VisitViewModel(
 
     fun salvarNovaVisita(data: String, status: String, comentario: String, cidade: String) {
 
-        // 5. Inicia a Coroutine no escopo do ViewModel
         viewModelScope.launch {
             try {
-                // 6. Cria o objeto Visita com os dados da tela
+
                 val novaVisita = Visita(
                     data = data,
                     status = status,
@@ -38,15 +34,14 @@ class VisitViewModel(
 
                 )
 
-                // 7. Chama a função SUSPENSA do repositório
-                // É aqui que a API e o Banco são chamados!
+
                 repository.salvarNovaVisita(novaVisita, cidade)
 
-                // Se deu certo, limpa qualquer erro antigo
+
                 _erroState.value = null
 
             } catch (e: Exception) {
-                // 8. Se falhar, avisa a UI pelo StateFlow de erro
+
                 _erroState.value = "Falha ao salvar a visita. Tente novamente."
                 e.printStackTrace()
             }
