@@ -14,42 +14,41 @@ class ListaAlunosViewModel(
     private val repository: AlunoRepository
 ) : ViewModel() {
 
-    // 1. Estado do texto da pesquisa
+    init {
+        atualizar()
+    }
+
+    private val _erroState = MutableStateFlow<String?>(null)
+    val erroState = _erroState.asStateFlow()//usando
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    //  Estado do texto da pesquisa
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
-    // 2. A lista agora é uma COMBINAÇÃO: (Banco de Dados + Texto da Pesquisa)
-    // Sempre que um dos dois mudar, essa lista se atualiza automaticamente.
-    val alunos = combine(repository.alunos, _searchText) { listaAlunos, texto ->
+    //fluxo de alunos
+    val alunos = combine(repository.alunos, _searchText)
+    { listaAlunos, texto ->
         if (texto.isBlank()) {
             listaAlunos // Se não tem busca, retorna tudo
         } else {
-            // Se tem busca, filtra pelo nome ou escola
             listaAlunos.filter { aluno ->
                 aluno.nome.contains(texto, ignoreCase = true) ||
                         aluno.escola.contains(texto, ignoreCase = true)
             }
         }
-    }.stateIn(
+
+    }.stateIn(//sempre disponivel
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
+        initialValue = emptyList()// semprecomeçar vazia
     )
-
-    private val _erroState = MutableStateFlow<String?>(null)
-    val erroState = _erroState.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
-
-    init {
-        atualizar()
-    }
 
     fun atualizar() {
         viewModelScope.launch {
             try {
-                _isLoading.value = true
+                _isLoading.value = true //Liga o loading antes da requisição.
                 _erroState.value = null
                 repository.atualizarAlunosDaApi()
             } catch (e: Exception) {
@@ -61,7 +60,7 @@ class ListaAlunosViewModel(
         }
     }
 
-    // 3. Função para a tela chamar quando o usuário digita
+    //  Função para a tela chamar quando o usuário digita
     fun onSearchTextChange(text: String) {
         _searchText.value = text
     }

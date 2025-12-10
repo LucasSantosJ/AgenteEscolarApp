@@ -45,7 +45,7 @@ fun AlunoItem(aluno: Aluno, onClick: () -> Unit) {
 
 
             Column(
-                modifier = Modifier.weight(1f) // Ocupa o espaço disponível
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = aluno.nome,

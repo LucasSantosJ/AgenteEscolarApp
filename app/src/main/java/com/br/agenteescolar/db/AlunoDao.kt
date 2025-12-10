@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AlunoDao {
 
-
-
     @Query("SELECT * FROM tabela_aluno ORDER BY nome ASC")
     fun getAllAlunos(): Flow<List<Aluno>>
 

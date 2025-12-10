@@ -16,7 +16,6 @@ fun NavGraphBuilder.listaAlunosScreen(navController: NavController) {
 
         val activity = navController.context as MainActivity
 
-
         val viewModel: ListaAlunosViewModel = viewModel(
             factory = activity.viewModelFactory
         )

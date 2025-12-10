@@ -21,7 +21,6 @@ fun VisitScreen(
     val todasVisitas by viewModel.todasVisitas.collectAsState()
     val erro by viewModel.erroState.collectAsState()
 
-
     var data by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
     var comentario by remember { mutableStateOf("") }

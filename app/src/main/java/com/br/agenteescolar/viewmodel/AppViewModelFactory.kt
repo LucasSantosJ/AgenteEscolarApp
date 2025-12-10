@@ -17,7 +17,6 @@ class AppViewModelFactory(
 
         val db = AppDatabase.getDatabase(context)
 
-
         if (modelClass.isAssignableFrom(ListaAlunosViewModel::class.java)) {
 
             val alunoDao = db.alunoDao()
@@ -27,7 +26,6 @@ class AppViewModelFactory(
             @Suppress("UNCHECKED_CAST")
             return ListaAlunosViewModel(alunoRepository) as T
         }
-
 
         if (modelClass.isAssignableFrom(VisitViewModel::class.java)) {
 

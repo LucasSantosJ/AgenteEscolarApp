@@ -11,9 +11,6 @@ data class Visita(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
-
-
-
     val data: String = "",
     val status: String = "",
     val comentario: String = "",

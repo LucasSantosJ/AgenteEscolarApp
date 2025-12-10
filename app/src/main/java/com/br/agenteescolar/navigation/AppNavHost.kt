@@ -24,11 +24,7 @@ fun AppNavHost(
         ) {
 
             listaAlunosScreen(navController)
-
-
             mapaGraph(navController)
-
-
             visitGraph(navController)
         }
     }

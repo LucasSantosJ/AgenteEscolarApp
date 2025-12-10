@@ -14,7 +14,6 @@ interface VisitaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(visita: Visita)
 
-
     @Query("SELECT * FROM tabela_visita ORDER BY data DESC")
     fun getAllVisitas(): Flow<List<Visita>>
 
